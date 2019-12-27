@@ -1,13 +1,12 @@
-{% set class_column = "C3\\Chart\\Column\\Column" %}
 {% set selector_chart = "#" ~ chart.divId %}
 {% set selector_column = selector_chart ~ " .c3-target-" ~ column.name %}
 {% set selector_columnLine = selector_column ~ " .c3-line" %}
 {% set selector_columnShapes = selector_column ~ " .c3-shapes" %}
 
-{% if column.opacity is _modified(class_column, "opacity") %}
+{% if column.opacity is _modified(column, "opacity") %}
     {{ _css(selector_columnShapes, { "opacity": column.opacity }) }}
 {% endif %}
 
-{% if column.strokeWidth is _modified(class_column, "strokeWidth") %}
+{% if column.strokeWidth is _modified(column, "strokeWidth") %}
     {{ _css(selector_columnLine, { "stroke-width": column.strokeWidth }) }}
 {% endif %}

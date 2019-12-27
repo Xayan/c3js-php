@@ -3,6 +3,8 @@
 namespace C3\Bridge;
 
 use C3\Exception\TwigException;
+use ReflectionClass;
+use ReflectionObject;
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 use Twig\TwigFunction;
@@ -94,8 +96,14 @@ class TwigBridge
         }));
 
         self::$environment->addTest(
-            new TwigTest('_modified', function($value, string $className, string $fieldName) {
-                $properties = (new \ReflectionClass($className))->getDefaultProperties();
+            new TwigTest('_modified', function($value, $class, string $fieldName) {
+                if(is_object($class)) {
+                    $reflection = new ReflectionObject($class);
+                } else {
+                    $reflection = new ReflectionClass($class);
+                }
+
+                $properties = $reflection->getDefaultProperties();
 
                 if(!isset($properties[$fieldName])) {
                     return false;
