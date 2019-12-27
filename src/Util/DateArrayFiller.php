@@ -62,7 +62,7 @@ class DateArrayFiller
     /**
      * @param array $array
      * @return array
-     * @throws Exception
+     * @throws DateArrayFillerException
      */
     public function fillGapsWithNulls(array $array): array
     {

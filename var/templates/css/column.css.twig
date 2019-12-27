@@ -1,0 +1,10 @@
+#{{ chart.divId }} .c3-target-{{ column.name }} .c3-line {
+    stroke-width: {{ column.strokeWidth }};
+    stroke-opacity: {{ column.opacity }};
+}
+
+{% if column.circlesHidden %}
+    #{{ chart.divId }} .c3-target-{{ column.name }} .c3-circles {
+       display: none;
+   }
+{% endif %}

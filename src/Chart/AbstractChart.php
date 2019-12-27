@@ -2,17 +2,11 @@
 
 namespace C3\Chart;
 
+use C3\Chart\Column\Column;
 use C3\Enum\ZoomTypeEnum;
-use C3\Extension\Column;
-use C3\Extension\MovingAverage;
 
 abstract class AbstractChart implements ChartInterface
 {
-    /**
-     * @var array
-     */
-    protected $data = [];
-
     /**
      * @var Column[]
      */
@@ -27,34 +21,31 @@ abstract class AbstractChart implements ChartInterface
      * @var ZoomTypeEnum
      */
     protected $zoomType;
+    /**
+     * @var string
+     */
+    protected $xAxisName = 'x';
 
     /**
      * AbstractChart constructor.
-     * @param array $data
      */
-    public function __construct(array $data)
+    public function __construct()
     {
-        $this->data = $data;
         $this->divId = 'chart_' . spl_object_id($this);
         $this->zoomType = ZoomTypeEnum::NONE();
-
-        foreach($this->getDefaultColumns($data) as $column) {
-            $this->addColumn($column);
-        }
     }
-
-    /**
-     * @param array $data
-     * @return Column[]
-     */
-    abstract public function getDefaultColumns(array $data): array;
 
     /**
      * @return array
      */
     public function getData(): array
     {
-        return $this->data;
+        return [
+            'x' => $this->getXAxisName(),
+            'columns' => $this->getColumns(),
+            'names' => $this->getNames(),
+            'hide' => $this->getHiddenColumnNames()
+        ];
     }
 
     /**
@@ -78,11 +69,16 @@ abstract class AbstractChart implements ChartInterface
 
     /**
      * @param Column $column
+     * @param bool $xAxis
      * @return AbstractChart
      */
-    public function addColumn(Column $column): self
+    public function addColumn(Column $column, bool $xAxis = false): self
     {
         $this->columns[] = $column;
+
+        if($xAxis) {
+            $this->setXAxisName($column->getName());
+        }
 
         return $this;
     }
@@ -132,11 +128,7 @@ abstract class AbstractChart implements ChartInterface
     {
         return [
             'bindto' => '#' . $this->getDivId(),
-            'data' => [
-                'columns' => $this->getColumns(),
-                'names' => $this->getNames(),
-                'hide' => $this->getHiddenColumnNames()
-            ],
+            'data' => $this->getData(),
             'zoom' => $this->getZoomType()
         ];
     }
@@ -164,27 +156,16 @@ abstract class AbstractChart implements ChartInterface
     /**
      * @return string
      */
-    public function renderHTML(): string
+    public function getXAxisName(): string
     {
-        $html = sprintf('<style>#%s .c3-line { stroke-width: 2px; }</style>', $this->getDivId());
-
-        foreach ($this->getColumns() as $column) {
-            if($column instanceof MovingAverage) {
-                $html .= sprintf('<style>#%s .c3-target-%s .c3-circles { display: none; }</style>', $this->getDivId(), $column->getName());
-                $html .= sprintf('<style>#%s .c3-target-%s .c3-line { stroke-width: 2px; stroke-opacity: 0.5; }</style>', $this->getDivId(), $column->getName());
-            }
-        }
-
-        $html .= sprintf('<div id="%s"></div>', $this->getDivId());
-
-        return $html;
+        return $this->xAxisName;
     }
 
     /**
-     * @return string
+     * @param string $xAxisName
      */
-    public function renderJS(): string
+    public function setXAxisName(string $xAxisName): void
     {
-        return sprintf('<script>c3.generate(%s)</script>', json_encode($this));
+        $this->xAxisName = $xAxisName;
     }
 }

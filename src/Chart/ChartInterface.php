@@ -19,16 +19,7 @@ interface ChartInterface extends JsonSerializable
 
     /**
      * @param ZoomTypeEnum $zoomType
+     * @return void
      */
     public function setZoomType(ZoomTypeEnum $zoomType): void;
-
-    /**
-     * @return string
-     */
-    public function renderHTML(): string;
-
-    /**
-     * @return string
-     */
-    public function renderJS(): string;
 }

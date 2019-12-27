@@ -1,6 +1,6 @@
 <?php
 
-namespace C3\Extension;
+namespace C3\Chart\Column;
 
 use JsonSerializable;
 
@@ -15,6 +15,21 @@ class Column implements JsonSerializable
      * @var string
      */
     private $label;
+
+    /**
+     * @var string
+     */
+    private $strokeWidth = '2px';
+
+    /**
+     * @var bool
+     */
+    private $circlesHidden = false;
+
+    /**
+     * @var float
+     */
+    private $opacity = 1.0;
 
     /**
      * @var bool
@@ -90,5 +105,59 @@ class Column implements JsonSerializable
     public function jsonSerialize(): array
     {
         return $this->getColumnData();
+    }
+
+    /**
+     * @return string
+     */
+    public function getStrokeWidth(): string
+    {
+        return $this->strokeWidth;
+    }
+
+    /**
+     * @param string $strokeWidth
+     * @return Column
+     */
+    public function setStrokeWidth(string $strokeWidth): Column
+    {
+        $this->strokeWidth = $strokeWidth;
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isCirclesHidden(): bool
+    {
+        return $this->circlesHidden;
+    }
+
+    /**
+     * @param bool $circlesHidden
+     * @return Column
+     */
+    public function setCirclesHidden(bool $circlesHidden): Column
+    {
+        $this->circlesHidden = $circlesHidden;
+        return $this;
+    }
+
+    /**
+     * @return float
+     */
+    public function getOpacity(): float
+    {
+        return $this->opacity;
+    }
+
+    /**
+     * @param float $opacity
+     * @return Column
+     */
+    public function setOpacity(float $opacity): Column
+    {
+        $this->opacity = $opacity;
+        return $this;
     }
 }

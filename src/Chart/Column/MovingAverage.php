@@ -1,6 +1,6 @@
 <?php
 
-namespace c3\Extension;
+namespace C3\Chart\Column;
 
 use InvalidArgumentException;
 
@@ -14,6 +14,7 @@ class MovingAverage extends Column
 
     /**
      * MovingAverage constructor.
+     *
      * @param array $data
      * @param int $steps
      * @param int $precision
@@ -31,13 +32,11 @@ class MovingAverage extends Column
         parent::__construct(
             $this->getUniqueName(),
             $this->getUniqueLabel(),
-            $this->data
+            []
         );
     }
 
     /**
-     *
-     *
      * @return array
      */
     public function getColumnData(): array

@@ -2,8 +2,6 @@
 
 namespace C3\Factory;
 
-use C3\Chart\ChartInterface;
-use C3\Chart\LineChart;
 use C3\Chart\TimeseriesChart;
 use C3\Enum\MovingAverageProperty;
 use C3\Enum\ZoomTypeEnum;
@@ -29,69 +27,66 @@ class TimeseriesChartFactory
     /**
      * @param array $data
      * @param ZoomTypeEnum|null $zoomType
-     * @param array $movingAverages
-     * @param bool $connectNull
+     * @param bool $connectNulls
      * @param string|null $dateFormat
      * @return TimeseriesChart
-     * @throws DateArrayFillerException
      */
     public function createTimeseriesChart(
         array $data,
         ?ZoomTypeEnum $zoomType = null,
-        array $movingAverages = [],
-        bool $connectNull = false,
+        bool $connectNulls = false,
         string $dateFormat = null
+    ): TimeseriesChart
+    {
+        $chart = new TimeseriesChart($data);
+
+        $this->setBaseInfo($chart, $zoomType, $connectNulls, $dateFormat);
+
+        return $chart;
+    }
+
+    public function createTimeseriesChartWithMovingAverages(
+        array $data,
+        array $movingAverages = [],
+        bool $fillGaps = true,
+        ?ZoomTypeEnum $zoomType = null,
+        ?bool $connectNulls = null,
+        ?string $dateFormat = null
     ): TimeseriesChart
     {
         $dataWithNulls = $this->dateArrayFiller->fillGapsWithNulls($data);
         $dataWithAvgs = $this->dateArrayFiller->fillGapsWithAverages($data);
 
-        $chart = new TimeseriesChart($dataWithNulls, $dataWithAvgs);
+        $chart = new TimeseriesChart($data);
 
-        $this->setBaseInfo($chart, $zoomType);
-        $this->processMovingAverages($chart, $movingAverages);
-
-        $chart->setConnectNull($connectNull);
-
-        if ($dateFormat !== null) {
-            $chart->setDateFormat($dateFormat);
-        }
+        $this->setBaseInfo($chart, $zoomType, $connectNulls, $dateFormat);
 
         return $chart;
     }
 
     /**
-     * @param array $data
+     * @param TimeseriesChart $chart
      * @param ZoomTypeEnum|null $zoomType
-     * @param array $movingAverages
-     * @param bool $connectNull
-     * @return LineChart
+     * @param bool|null $connectNulls
+     * @param string|null $dateFormat
      */
-    public function createLineChart(
-        array $data,
+    private function setBaseInfo(
+        TimeseriesChart $chart,
         ?ZoomTypeEnum $zoomType = null,
-        array $movingAverages = [],
-        bool $connectNull = false
-    ): LineChart
-    {
-        $chart = new LineChart($data);
-
-        $this->setBaseInfo($chart, $zoomType);
-        $this->processMovingAverages($chart, $movingAverages);
-
-        $chart->setConnectNull($connectNull);
-
-        return $chart;
-    }
-
-    /**
-     * @param ChartInterface $chart
-     * @param ZoomTypeEnum|null $zoomType
-     */
-    private function setBaseInfo(ChartInterface $chart, ?ZoomTypeEnum $zoomType)
+        ?bool $connectNulls = null,
+        ?string $dateFormat = null
+    )
     {
         if ($zoomType !== null) {
             $chart->setZoomType($zoomType);
+        }
+
+        if($connectNulls !== null) {
+            $chart->setConnectNull($connectNulls);
+        }
+
+        if($dateFormat !== null) {
+            $chart->setDateFormat($dateFormat);
         }
     }
 
