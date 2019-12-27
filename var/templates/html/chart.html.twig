@@ -1,6 +1,4 @@
 <style>
-    #{{ chart.divId }} .c3-line { stroke-width: 2px; }
-
     {% for column in chart.columns %}
         {# TODO if moving average #}
         {% include "css/column.css.twig" with { chart: chart, column: column } only %}
