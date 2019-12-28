@@ -92,7 +92,7 @@ class TwigBridge
                 $styleString = $style;
             }
 
-            return sprintf("%s { %s }", $selector, $styleString);
+            return sprintf("%s { %s } ", $selector, $styleString);
         }));
 
         self::$environment->addTest(

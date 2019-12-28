@@ -3,10 +3,12 @@
 {% set selector_columnLine = selector_column ~ " .c3-line" %}
 {% set selector_columnShapes = selector_column ~ " .c3-shapes" %}
 
-{% if column.opacity is _modified(column, "opacity") %}
-    {{ _css(selector_columnShapes, { "opacity": column.opacity }) }}
-{% endif %}
+{%- apply spaceless %}
+    {%- if column.opacity is _modified(column, "opacity") -%}
+        {{ _css(selector_columnShapes, { "opacity": column.opacity }) }}
+    {%- endif -%}
 
-{% if column.strokeWidth is _modified(column, "strokeWidth") %}
-    {{ _css(selector_columnLine, { "stroke-width": column.strokeWidth }) }}
-{% endif %}
+    {%- if column.strokeWidth is _modified(column, "strokeWidth") -%}
+        {{ _css(selector_columnLine, { "stroke-width": column.strokeWidth }) }}
+    {%- endif -%}
+{% endapply -%}

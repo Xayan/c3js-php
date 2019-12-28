@@ -1,12 +1,13 @@
-<style>
-    {% for column in chart.columns %}
-        {# TODO if moving average #}
-        {% include "css/column.css.twig" with { chart: chart, column: column } only %}
-    {% endfor %}
-</style>
+<div id="{{ chart.divId }}_container">
+    <style>
+        {%- for column in chart.columns -%}
+            {% include "css/column.css.twig" with { chart: chart, column: column } only %}
+        {%- endfor -%}
+    </style>
 
-<div id="{{ chart.divId }}"></div>
+    <div id="{{ chart.divId }}"></div>
 
-<script>
-    {% include "js/chart.js.twig" with { chart: chart } only %}
-</script>
+    <script>
+        {% include "js/chart.js.twig" with { chart: chart } only %}
+    </script>
+</div>
