@@ -24,7 +24,7 @@ abstract class AbstractChart implements ChartInterface
     /**
      * @var string
      */
-    protected $xAxisName = 'x';
+    protected $xAxisName;
 
     /**
      * AbstractChart constructor.
@@ -154,17 +154,17 @@ abstract class AbstractChart implements ChartInterface
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getXAxisName(): string
+    public function getXAxisName(): ?string
     {
         return $this->xAxisName;
     }
 
     /**
-     * @param string $xAxisName
+     * @param string|null $xAxisName
      */
-    public function setXAxisName(string $xAxisName): void
+    public function setXAxisName(?string $xAxisName): void
     {
         $this->xAxisName = $xAxisName;
     }
