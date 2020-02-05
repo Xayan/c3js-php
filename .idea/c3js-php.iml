@@ -12,5 +12,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="vendors~app.719cda47" level="application" />
+    <orderEntry type="library" name="app.8fc52db9" level="application" />
+    <orderEntry type="library" name="runtime.6e3f3c3a" level="application" />
   </component>
 </module>

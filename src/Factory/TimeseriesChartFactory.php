@@ -2,6 +2,7 @@
 
 namespace C3\Factory;
 
+use C3\Chart\Column\Column;
 use C3\Chart\TimeseriesChart;
 use C3\Enum\MovingAverageProperty;
 use C3\Enum\ZoomTypeEnum;
@@ -38,7 +39,10 @@ class TimeseriesChartFactory
         string $dateFormat = null
     ): TimeseriesChart
     {
-        $chart = new TimeseriesChart($data);
+        $chart = new TimeseriesChart();
+
+        $chart->addColumn(new Column('x', 'Date', array_keys($data)), true);
+        $chart->addColumn(new Column('value', 'Value', array_values($data)));
 
         $this->setBaseInfo($chart, $zoomType, $connectNulls, $dateFormat);
 
