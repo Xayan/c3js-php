@@ -77,8 +77,8 @@ class LineChart extends AbstractChart
     {
         $this->addColumn(
             new MovingAverage(
-                $label,
                 $name,
+                $label,
                 $this->movingAverageCalculator->calculate($sourceColumn, $steps, $precision, $movingAverageGapBehavior)
             )
         );

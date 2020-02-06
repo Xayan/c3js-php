@@ -8,14 +8,14 @@ use C3\Enum\MovingAverageGapBehavior;
 interface MovingAverageCalculatorInterface
 {
     /**
-     * @param Column $sourceColumn
+     * @param Column $column
      * @param int $steps
      * @param int $precision
      * @param MovingAverageGapBehavior $gapBehavior
      * @return array
      */
     public function calculate(
-        Column $sourceColumn,
+        Column $column,
         int $steps,
         int $precision,
         MovingAverageGapBehavior $gapBehavior

@@ -113,7 +113,7 @@ abstract class AbstractChart implements ChartInterface
      */
     public function getZoomType(): ZoomTypeEnum
     {
-        return new ZoomTypeEnum($this->zoomType);
+        return $this->zoomType;
     }
 
     /**
@@ -121,7 +121,7 @@ abstract class AbstractChart implements ChartInterface
      */
     public function setZoomType(ZoomTypeEnum $zoomType): void
     {
-        $this->zoomType = $zoomType->getValue();
+        $this->zoomType = $zoomType;
     }
 
     /**
@@ -146,7 +146,7 @@ abstract class AbstractChart implements ChartInterface
         return [
             'bindto' => '#' . $this->getDivId(),
             'data' => $this->getData(),
-            'zoom' => $this->getZoomType()
+            'zoom' => $this->getZoomType()->getValue() ?? null
         ];
     }
 
