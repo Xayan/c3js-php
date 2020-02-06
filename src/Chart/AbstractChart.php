@@ -74,6 +74,8 @@ abstract class AbstractChart implements ChartInterface
      */
     public function addColumn(Column $column, bool $xAxis = false): self
     {
+        // TODO: check if column with given name already exists
+
         $this->columns[] = $column;
 
         if($xAxis) {
@@ -89,6 +91,21 @@ abstract class AbstractChart implements ChartInterface
     public function getColumns(): array
     {
         return $this->columns;
+    }
+
+    /**
+     * @param string $name
+     * @return Column|null
+     */
+    public function getColumnByName(string $name): ?Column
+    {
+        foreach ($this->columns as $column) {
+            if($column->getName() === $name) {
+                return $column;
+            }
+        }
+
+        return null;
     }
 
     /**

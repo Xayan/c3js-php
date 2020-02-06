@@ -52,7 +52,7 @@ class Column implements JsonSerializable
     {
         $this->name = $name;
         $this->label = $label;
-        $this->values = $values;
+        $this->values = array_values($values);
         $this->hidden = $hidden;
     }
 
